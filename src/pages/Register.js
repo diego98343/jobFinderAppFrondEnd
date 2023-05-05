@@ -20,12 +20,24 @@ const [values, setValues] = useState(initialState)
 
 
 const handleChange = (e) =>{
-    console.log(e.target)
+   //we create the valariables 
+    const name = e.target.name
+    const value = e.target.value
+    // then we set the state values 
+
+    setValues({...values, [name]:value});
+   
+    
 };
 
 const onSubmit = (e) =>{ 
     e.preventDefault()
-    console.log(e.target)
+   const {name,email,password,isMember} = values;
+
+   if(!email || !password || (!isMember && !name)){
+      console.log('email or password are empty')
+   }
+
 };
 
 
@@ -48,8 +60,6 @@ const toggleMember = () =>{
                 handleChange={handleChange}
                   />
                )}
-
-               
 
               <FormRow
                 type='email'
