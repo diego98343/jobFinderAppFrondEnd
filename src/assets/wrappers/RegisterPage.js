@@ -9,8 +9,8 @@ const Wrapper = styled.section`
     margin-bottom: 1.38rem;
   }
   .form {
-    max-width: 400px;
-    border-top: 5px solid var(--primary-500);
+    max-width: 500px;
+    border-top: 5px solid var(--grenPrimary);
   }
 
   h3 {

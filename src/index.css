@@ -40,6 +40,11 @@ html {
   --primary-800: #1e40af;
   --primary-900: #1e3a8a;
 
+
+   /* alternative colors  */
+  --grenPrimary:#038108;
+  
+
   /* grey */
   --grey-50: #f0f4f8;
   --grey-100: #d9e2ec;

@@ -2,6 +2,8 @@ import React from 'react'
 import Logo from '../components/Logo'
 import main from '../assets/images/main.svg'
 import styled from 'styled-components'
+// import Wrapper from '../assets/wrappers/la'
+import imag2 from '../assets/images/interview.svg'
 import { Link } from 'react-router-dom'
 
 
@@ -21,7 +23,7 @@ const Landing = () => {
              <p>I'm baby live-edge selvage chia street art, flannel listicle jianbing pickled. YOLO bruh sriracha photo booth biodiesel. Bruh banjo vape gentrify sartorial, umami franzen cornhole direct trade neutral milk hotel street art tousled occupy fingerstache ethical. 8-bit literally post-ironic raclette migas mixtape messenger bag aesthetic vaporware tbh poke helvetica kickstarter shaman. You probably haven't heard of them williamsburg DIY hella.</p>
             </div>
             <Link to='/register' className='btn btn-hero'>Login/Register</Link>
-          <img src={main} alt='job hunt' className='img main-img'/>
+          <img src={imag2} alt='job hunt' className='img main-img'/>
         </div>    
     </main>
     </Wrapper>

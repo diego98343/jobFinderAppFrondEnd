@@ -5,18 +5,26 @@ import React from 'react'
 import Wrapper from '../assets/wrappers/RegisterPage';
 import Logo from '../components/Logo'
 import { FormRow } from '../components';
+import { toast } from 'react-toastify';
+import {useDispatch,userSelector} from 'react-redux'
+import {loginUser, registerUser} from '../features/user/userSlice'
 
 const initialState = {
     name:'',
     email:'',
     password:'',
-    inMember:true
+    isMember:true
 }
 
 
 function Register() {
 
+
 const [values, setValues] = useState(initialState)
+// const {user, isLoading} = userSelector(store=> store.user);
+
+const dispatch = useDispatch();
+
 
 
 const handleChange = (e) =>{
@@ -25,28 +33,44 @@ const handleChange = (e) =>{
     const value = e.target.value
     // then we set the state values 
 
-    setValues({...values, [name]:value});
+    setValues({ ...values, [name]: value });
    
-    
 };
 
 const onSubmit = (e) =>{ 
+
     e.preventDefault()
+
    const {name,email,password,isMember} = values;
 
    if(!email || !password || (!isMember && !name)){
-      console.log('email or password are empty')
+      toast('email or password are empty')
    }
+
+   if (name.length < 3 ){
+      toast('name must have more than 3 characters')
+   }
+
+   if (password.length < 7){
+      toast('password must has more than 7 characters')
+   }
+
+   if (isMember) {
+      dispatch(loginUser({ email: email, password: password }));
+      return;
+    }
+    dispatch(registerUser({ name, email, password }));
 
 };
 
 
-const toggleMember = () =>{
-   setValues({...values,isMember: !values.isMember});
-}
+const toggleMember = () => {
+   setValues({ ...values, isMember: !values.isMember });
+ };
 
   return (
     <Wrapper>
+
            <form className="form" onSubmit={onSubmit}>
               <Logo></Logo>
 
@@ -80,7 +104,6 @@ const toggleMember = () =>{
               </button>
 
                 
-
               <p>
                   {values.isMember?'Not a member yet?':'Already a member'}
               
