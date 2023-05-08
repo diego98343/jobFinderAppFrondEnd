@@ -21,7 +21,7 @@ function Register() {
 
 
 const [values, setValues] = useState(initialState)
-// const {user, isLoading} = userSelector(store=> store.user);
+const {user, isLoading} = userSelector((store)=> store.user);
 const dispatch = useDispatch();
 
 
@@ -105,7 +105,7 @@ const toggleMember = () => {
                 handleChange={handleChange}
                />
 
-              <button type='submit' className='btn btn-block'>
+              <button type='submit' className='btn btn-block' disabled={isLoading}>
                  submit
               </button>
 
