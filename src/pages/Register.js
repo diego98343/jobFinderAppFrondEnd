@@ -6,7 +6,7 @@ import Wrapper from '../assets/wrappers/RegisterPage';
 import Logo from '../components/Logo'
 import { FormRow } from '../components';
 import { toast } from 'react-toastify';
-import {useDispatch,userSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import {loginUser, registerUser} from '../features/user/userSlice'
 
 const initialState = {
@@ -21,7 +21,7 @@ function Register() {
 
 
 const [values, setValues] = useState(initialState)
-const {user, isLoading} = userSelector((store)=> store.user);
+const { user, isLoading } = useSelector((store) => store.user);
 const dispatch = useDispatch();
 
 
