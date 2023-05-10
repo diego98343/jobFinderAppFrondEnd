@@ -1,11 +1,14 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import {toast} from 'react-toastify'
 import customFetch from '../../utils/axios';
-
+import { addUserToLocalStorage, 
+         getUserFromStorage,
+         removeUserFromLocalStorage } from '../../utils/localStorage';
 
 const initialState ={
     isLoading: false,
-    user:null
+    user:getUserFromStorage(),
+    removeUserFromLocalStorage
 }
 
 
@@ -16,8 +19,7 @@ export const registerUser = createAsyncThunk(
       const resp = await customFetch.post('/auth/register',user)
       //we are returning the user 
       return resp.data
-    } catch(error){
-      
+    } catch(error){ 
       return thunkAPI.rejectWithValue(error.response.data.msg);
     }
  }
@@ -47,9 +49,11 @@ const userSlice = createSlice({
       [registerUser.pending]:(state)=>{
         state.isLoading = true
       },
+      //in this one we have to make sure we save the user info 
       [registerUser.fulfilled]:(state,{payload})=>{
         const {user} = payload
         state.isLoading = false
+        addUserToLocalStorage(user);
         state.user = user
         toast.success(`Hello There ${user.name}`);
       },
@@ -64,6 +68,7 @@ const userSlice = createSlice({
         const {user} = payload
         state.isLoading = false
         state.user = user
+        addUserToLocalStorage(user);
         toast.success(`Welcome Back ${user.name}`);
       },
       [loginUser.rejected]:(state,{payload})=>{
