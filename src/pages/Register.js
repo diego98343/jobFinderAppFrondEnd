@@ -39,29 +39,13 @@ const onSubmit = (e) =>{
 
     e.preventDefault()
 
-   const {name,email,password,isMember} = values;
-
-   if(!isMember && !name){
-      toast('name is empty')
-   }
-
-   if(!password){
-      toast('password is empty')
-   }
-
-   if(!email){
-      toast('email is empty')
-   }
-
-   if (name.length < 3 && !isMember){
-      toast('name must have at least 3 characters')
-   }
-
-   if (password.length < 7 && !isMember){
-      toast('password must have at least 7 characters')
-   }
-
-   if (isMember) {
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      toast.error('Please fill out all fields');
+      return;
+    }
+   
+    if (isMember) {
       dispatch(loginUser({ email: email, password: password }));
       return;
     }
