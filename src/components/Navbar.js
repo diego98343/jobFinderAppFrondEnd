@@ -1,6 +1,5 @@
 import React from 'react'
 import Wrapper from '../assets/wrappers/Navbar';
-import {GoHome} from 'react-icons/go'
 import {MdOutlineFormatAlignLeft} from 'react-icons/md'
 import { FaUserCircle, FaCaretDown,FaAlignLeft } from 'react-icons/fa'
 import Logo from './Logo'
@@ -9,8 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Navbar() {
   //we have make sure bring the user information
-  const {user} = useSelector((store)=>store.user)
-  const dispatch = useDispatch();
+
+const { user } = useSelector((store) => store.user);
+console.log(user);
+const dispatch = useDispatch();
 
 
   return (
@@ -32,7 +33,8 @@ function Navbar() {
               type='button' 
               className='btn' 
               onClick={()=> console.log('toggle logout dropdown')}
-              ><FaUserCircle>{user?.name}</FaUserCircle>
+              ><FaUserCircle/>
+              {user?.name}
           </button>
 
           <div className='dropdown show-dropdown'>

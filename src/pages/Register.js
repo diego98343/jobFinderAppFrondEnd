@@ -18,9 +18,6 @@ const initialState = {
 }
 
 
-
-
-
 function Register() {
 
 

@@ -7,6 +7,7 @@ import { addUserToLocalStorage,
 
 const initialState ={
     isLoading: false,
+    isSidebarOpen:false,
     user:getUserFromStorage(),
     removeUserFromLocalStorage
 }
