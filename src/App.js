@@ -3,7 +3,14 @@ import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import {Landing,Error,Register} from './pages'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import { Profile, AddJob, AllJobs, Stats, SharedLayout } from './pages/dashboard'
+import { Profile, 
+         AddJob, 
+         AllJobs, 
+         Stats, 
+         SharedLayout
+         } from './pages/dashboard'
+
+ import { ProtectedRoutes} from './pages'    
 // import Logo from './components/Logo'
 
 function App() {
@@ -12,7 +19,13 @@ function App() {
       
       <Routes>
 
-        <Route path='/'element={<SharedLayout />}>
+        <Route path='/'element={
+      
+          <ProtectedRoutes>
+              <SharedLayout />
+          </ProtectedRoutes>
+        
+        }>
           <Route index element={<Stats />} />
           <Route path='all-jobs' element={<AllJobs />} />
           <Route path='add-job' element={<AddJob />} />
