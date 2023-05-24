@@ -27,8 +27,8 @@ const toggle = ()=>{
                 <MdOutlineFormatAlignLeft/>
         </button>
         <div>
-           <Logo/>
-           <h3>Navbar</h3>
+           
+           <h3>Dashboard</h3>
            {/* <GoHome></GoHome> */}
         </div>
         <div className='btn-container'>
