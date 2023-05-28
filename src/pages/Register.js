@@ -51,6 +51,7 @@ const onSubmit = (e) =>{
       dispatch(loginUser({ email: email, password: password }));
       return;
     }
+
     dispatch(registerUser({ name, email, password }));
 
 };
@@ -68,6 +69,7 @@ useEffect(() => {
      }, 2000);
    }
  }, [user]);
+ 
 
   return (
     <Wrapper>
