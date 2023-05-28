@@ -5,6 +5,9 @@ import { addUserToLocalStorage,
          getUserFromStorage,
          removeUserFromLocalStorage } from '../../utils/localStorage';
 
+
+
+//This is the initial state of the user        
 const initialState ={
     isLoading: false,
     isSidebarOpen:false,
@@ -61,10 +64,6 @@ async(user,thunkAPI)=>{
   }
 }
 )
-
-
-
-
 
 const userSlice = createSlice({
     name:'user',
