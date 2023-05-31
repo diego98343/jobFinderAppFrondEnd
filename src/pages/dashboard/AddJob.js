@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import React from 'react'
-import { handleChange } from '../../features/job/JobSlice';
+import { handleChange, clearValues } from '../../features/job/JobSlice';
 
 function AddJob() {
 
@@ -25,7 +25,7 @@ function AddJob() {
   const dispatch = useDispatch();
 
    const handleSubmit = (e) =>{
-    
+
      e.preventDefault()
 
       if(!position || !company || !jobLocation){
@@ -91,7 +91,7 @@ function AddJob() {
          <div className='btn-container'>
            <button  type='button' 
                     className='btn btn-block clear-btn'
-                    onClick={()=>console.log('clear values')}
+                    onClick={()=> dispatch(clearValues())}
                     >clear</button>
 
            <button  type='submit' 

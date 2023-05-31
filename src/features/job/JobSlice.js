@@ -17,12 +17,27 @@ const initialState = {
   editJobId: '',
 };
 
+export const createJob = createAsyncThunk(
+  'job/createJob',
+  async (job,thunkAPI)=>{
+    
+  }
+)
+
+
+
 const jobSlice = createSlice({
     name:'job',
     initialState,
     reducers:{
+
+      //this function takes the change values from the user input
       handleChange:(state,{payload:{name,value}})=>{
         state[name] =value
+      },
+      //this function is used to clear values from the form and reset it to default
+      clearValues: ()=>{
+        return initialState
       }
     }
 });
@@ -30,6 +45,6 @@ const jobSlice = createSlice({
 
 
 
-export const { handleChange } = jobSlice.actions;
+export const { handleChange, clearValues } = jobSlice.actions;
 
 export default jobSlice.reducer;
