@@ -19,10 +19,21 @@ const initialState = {
 
 export const createJob = createAsyncThunk(
   'job/createJob',
-  async (job,thunkAPI)=>{
-    
+async(user,thunkAPI)=>{
+  try{
+    const resp = await customFetch.post('/jobs',user, {
+      headers:{
+        authorization: `Bearer ${thunkAPI.getState().user.user.token}`
+      }
+    });
+    thunkAPI.dispatch(clearValues());
+    //we are returning the user 
+    return resp.data
+  } catch(error){ 
+    return thunkAPI.rejectWithValue(error.response.data.msg)
   }
-)
+}
+);
 
 
 
