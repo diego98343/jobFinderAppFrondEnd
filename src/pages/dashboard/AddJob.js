@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import React from 'react'
+import { handleChange } from '../../features/job/JobSlice';
 
 function AddJob() {
 
@@ -19,22 +20,26 @@ function AddJob() {
     isEditing,
     editJobId,
   } = useSelector((store) => store.job);
-  
+
+  //we this we takes the values we get from the handleJobInput
+  const dispatch = useDispatch();
+
    const handleSubmit = (e) =>{
+    
      e.preventDefault()
 
       if(!position || !company || !jobLocation){
         toast.error('Please fill out all fields')
         return;
       }
-
    }
 
     // this function handle every input and takes the user input value 
    const handleJobInput =(e) =>{
      const name = e.target.name
      const value = e.target.value
-     console.log(name,value);
+     //this handlechange comes from the jobSlice. we use handle change to pass name and value to redux 
+     dispatch(handleChange({name,value}));
    }
   
 
@@ -68,25 +73,20 @@ function AddJob() {
             />  
          </div>
 
-        <div className='form-row'>
-             <label htmlFor='status' className='form-label'>
-              status
-             </label>
-             <select
-             name='status'
-             id='status'
-             value={status}
-             onChange={handleJobInput}
-             className='form-select'
-             >
-              {statusOptions.map((itemValue,index)=>{
-                return <option 
-                        key={index}
-                        value={itemValue}  
-                       >{itemValue}</option>
-              })}
-             </select>
-        </div>
+       <FormRowSelect
+         name='status'
+         value={status}
+         handleChange={handleJobInput}
+         list={statusOptions}
+       />
+
+       <FormRowSelect
+         name='jobType'
+         labelText={'job type'}
+         value={jobType}
+         handleChange={handleJobInput}
+         list={jobTypeOptions}
+       />
 
          <div className='btn-container'>
            <button  type='button' 
@@ -100,7 +100,6 @@ function AddJob() {
                     disabled={isLoading}
                     >submit</button>
          </div>
-
       </form>
     </Wrapper>
   )
