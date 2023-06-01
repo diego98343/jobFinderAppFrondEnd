@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import customFetch from '../../utils/axios';
 import { getUserFromLocalStorage } from '../../utils/localStorage';
-import userSlice from '../user/userSlice';
+import userSlice, { logoutUser } from '../user/userSlice';
 
 const initialState = {
   isLoading: false,
@@ -27,10 +27,14 @@ async(user,thunkAPI)=>{
       }
     });
     thunkAPI.dispatch(clearValues());
-    //we are returning the user 
     return resp.data
   } catch(error){ 
-    return thunkAPI.rejectWithValue(error.response.data.msg)
+    if(error.response.status === 401){
+       thunkAPI.dispatch(logoutUser());
+       return thunkAPI.rejectWithValue('Unauthorized! Logging out');
+    }
+    //basic setup
+    return thunkAPI.rejectWithValue(error.response.data.msg);  
   }
 }
 );
@@ -42,13 +46,27 @@ const jobSlice = createSlice({
     initialState,
     reducers:{
 
-      //this function takes the change values from the user input
+      //this function takes the changed values from the user input
       handleChange:(state,{payload:{name,value}})=>{
         state[name] =value
       },
       //this function is used to clear values from the form and reset it to default
       clearValues: ()=>{
         return initialState
+      },
+    },
+    extraReducers:{
+      //createjob from the asyncTHunk
+      [createJob.pending]: (state)=>{
+        state.isLoading = true
+      },
+      [createJob.fulfilled]: (state)=>{
+        state.isLoading = false
+        toast.success('Job created')
+      },
+      [createJob.pending]: (state,payload)=>{
+        state.isLoading = true
+        toast.error(payload)
       }
     }
 });
