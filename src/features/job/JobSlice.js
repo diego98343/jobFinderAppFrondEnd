@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import customFetch from '../../utils/axios';
-import { getUserFromLocalStorage } from '../../utils/localStorage';
+import { getUserFromStorage } from '../../utils/localStorage';
 import userSlice, { logoutUser } from '../user/userSlice';
 
 const initialState = {
@@ -10,18 +10,17 @@ const initialState = {
   company: '',
   jobLocation: '',
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
-  jobType: 'full-time',
-  statusOptions: ['interview', 'declined', 'pending','diego'],
+  jobType: '',
+  statusOptions: ['interview', 'declined', 'pending'],
   status: 'pending',
   isEditing: false,
   editJobId: '',
 };
 
-export const createJob = createAsyncThunk(
-  'job/createJob',
-async(user,thunkAPI)=>{
+export const createJob = createAsyncThunk('job/createJob',async (job,thunkAPI)=>{
+
   try{
-    const resp = await customFetch.post('/jobs',user, {
+    const resp = await customFetch.post('/jobs',job, {
       headers:{
         authorization: `Bearer ${thunkAPI.getState().user.user.token}`
       }
@@ -30,14 +29,14 @@ async(user,thunkAPI)=>{
     return resp.data
   } catch(error){ 
     if(error.response.status === 401){
-       thunkAPI.dispatch(logoutUser());
+       thunkAPI.dispatch(logoutUser()); 
        return thunkAPI.rejectWithValue('Unauthorized! Logging out');
     }
-    //basic setup
     return thunkAPI.rejectWithValue(error.response.data.msg);  
   }
-}
+ }
 );
+
 
 
 
@@ -52,21 +51,23 @@ const jobSlice = createSlice({
       },
       //this function is used to clear values from the form and reset it to default
       clearValues: ()=>{
-        return initialState
+        return {...initialState,
+                    jobLocation: getUserFromStorage()?.location || ''}
       },
     },
     extraReducers:{
       //createjob from the asyncTHunk
       [createJob.pending]: (state)=>{
-        state.isLoading = true
+        state.isLoading = true;
       },
       [createJob.fulfilled]: (state)=>{
-        state.isLoading = false
+        state.isLoading = false;
         toast.success('Job created')
       },
-      [createJob.pending]: (state,payload)=>{
-        state.isLoading = true
+      [createJob.rejected]: (state,{payload})=>{
+        state.isLoading = true;
         toast.error(payload)
+        console.log(payload)
       }
     }
 });

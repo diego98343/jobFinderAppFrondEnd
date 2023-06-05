@@ -3,8 +3,8 @@ import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import React from 'react'
-import { handleChange, clearValues } from '../../features/job/JobSlice';
+import React, { useEffect } from 'react'
+import { handleChange, clearValues, createJob } from '../../features/job/JobSlice';
 
 function AddJob() {
 
@@ -12,9 +12,9 @@ function AddJob() {
     isLoading,
     position,
     company,
-    jobLocation,
     jobType,
     jobTypeOptions,
+    jobLocation,
     status,
     statusOptions,
     isEditing,
@@ -23,7 +23,7 @@ function AddJob() {
 
   //we this we takes the values we get from the handleJobInput
   const dispatch = useDispatch();
-
+  const {user} = useSelector((store)=> store.user)
    const handleSubmit = (e) =>{
 
      e.preventDefault()
@@ -32,6 +32,7 @@ function AddJob() {
         toast.error('Please fill out all fields')
         return;
       }
+      dispatch(createJob({position,company,jobLocation,status,jobType}));
    }
 
     // this function handle every input and takes the user input value 
@@ -41,6 +42,14 @@ function AddJob() {
      //this handlechange comes from the jobSlice. we use handle change to pass name and value to redux 
      dispatch(handleChange({name,value}));
    }
+
+   // we use this use effect to access the user location 
+   useEffect(()=>{
+    dispatch(handleChange({
+      name:'jobLocation',
+      value: user.location
+    }))
+   },[])
   
 
   return (
@@ -75,18 +84,21 @@ function AddJob() {
 
        <FormRowSelect
          name='status'
+         labelText={'status'}
          value={status}
          handleChange={handleJobInput}
          list={statusOptions}
        />
-
-       <FormRowSelect
+        
+        <FormRowSelect
          name='jobType'
-         labelText={'job type'}
+         labelText='job type'
          value={jobType}
          handleChange={handleJobInput}
          list={jobTypeOptions}
        />
+
+      
 
          <div className='btn-container'>
            <button  type='button' 
