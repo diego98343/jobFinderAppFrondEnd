@@ -44,7 +44,7 @@ const toggle = ()=>{
              <button 
                  type='button' 
                  className='dropdown-btn'
-                 onClick={()=> dispatch(logoutUser())}
+                 onClick={()=> dispatch(logoutUser('logging out...'))}
                 >logout
              </button>
           </div>
