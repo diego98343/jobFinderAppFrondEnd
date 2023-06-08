@@ -41,7 +41,9 @@ const onSubmit = (e) =>{
 
     e.preventDefault()
 
+    //this come from the initial state
     const { name, email, password, isMember } = values;
+
     if (!email || !password || (!isMember && !name)) {
       toast.error('Please fill out all fields');
       return;

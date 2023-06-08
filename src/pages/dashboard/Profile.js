@@ -25,6 +25,7 @@ function Profile() {
        toast.error('please fill out all fields');
        return;
     } 
+    //dispatch is used to execute the updateUser function 
     dispatch(updateUser(userData))
   };
 

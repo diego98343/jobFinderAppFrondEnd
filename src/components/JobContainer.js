@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Job from './Job'
 import Wrapper from '../assets/wrappers/JobsContainer';
 import {useSelector,useDispatch} from 'react-redux'
+import { getAllJobs } from '../features/alljobs/AlljobsSlice';
 
 function JobContainer() {
+
 const {jobs, isLoading} =useSelector((store)=> store.allJobs)
+const dispatch = useDispatch();
+
+
+useEffect(()=> {
+    //dispatch 
+    dispatch(getAllJobs())
+},{})
 
 
 if(isLoading){
@@ -32,7 +41,7 @@ return  <Wrapper>
                 return <Job key={job.id} {...job}/>
               })}
            </div>
-           
+
         </Wrapper>
 
 }
