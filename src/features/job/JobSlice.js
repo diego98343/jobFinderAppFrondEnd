@@ -17,6 +17,7 @@ const initialState = {
   editJobId: '',
 };
 
+
 export const createJob = createAsyncThunk('job/createJob',async (job,thunkAPI)=>{
 
   let url ='/jobs';
@@ -38,7 +39,6 @@ export const createJob = createAsyncThunk('job/createJob',async (job,thunkAPI)=>
   }
  }
 );
-
 
 
 

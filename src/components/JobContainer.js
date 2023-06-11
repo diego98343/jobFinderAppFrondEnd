@@ -9,11 +9,11 @@ function JobContainer() {
 const {jobs, isLoading} =useSelector((store)=> store.allJobs)
 const dispatch = useDispatch();
 
-
+// in the use effect function we pass the funtionality and then what we expect for example
 useEffect(()=> {
     //dispatch 
-    dispatch(getAllJobs())
-},{})
+    dispatch(getAllJobs());
+},[])
 
 
 if(isLoading){
@@ -33,15 +33,14 @@ if(jobs.length===0){
 }
 
 return  <Wrapper>
-
-           <h5>jobs info</h5>
+           <h5>
+           jobs info
+           </h5>
            <div className='jobs'>
-              {jobs.map((job)=>{
-                console.log(job)
-                return <Job key={job.id} {...job}/>
-              })}
-           </div>
-
+              {jobs.map((job) => {
+                 return <Job key={job._id} {...job} />;
+                 })}
+            </div>
         </Wrapper>
 
 }
