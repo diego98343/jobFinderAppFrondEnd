@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import Wrapper from '../assets/wrappers/Job';
 import { Link } from 'react-router-dom';
 import  moment  from 'moment';
+import { deleteJob, setEditJob } from '../features/job/JobSlice';
 
 //remember to put array when the function is passing variables 
 function Job({_id,position,company,jobLocation,jobType,createdAt,status}) {
@@ -34,13 +35,22 @@ function Job({_id,position,company,jobLocation,jobType,createdAt,status}) {
              <Link
                to='/add-jobs'
                className='btn edit-btn'
-               onClick={()=> console.log('edit job')}
+               //we set the values when editing based on the values we have in the job component 
+               onClick={()=> dispatch(setEditJob({editJobId:_id,
+                                                  position,
+                                                  company,
+                                                  jobLocation,
+                                                  jobType,
+                                                  status
+                                                })
+                                               )
+                                              }
              >
               edit
              </Link>
              <button
              className='btn delete-btn'
-             onClick={()=> console.log('delete job')}
+             onClick={()=> dispatch(deleteJob(_id))}
              >
               delete
              </button>

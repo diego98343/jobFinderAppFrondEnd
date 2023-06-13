@@ -24,6 +24,7 @@ function AddJob() {
   //we this we takes the values we get from the handleJobInput
   const dispatch = useDispatch();
   const {user} = useSelector((store)=> store.user)
+
    const handleSubmit = (e) =>{
 
      e.preventDefault()
@@ -45,10 +46,15 @@ function AddJob() {
 
    // we use this use effect to access the user location 
    useEffect(()=>{
-    dispatch(handleChange({
-      name:'jobLocation',
-      value: user.location
-    }))
+
+    if(!isEditing){
+      dispatch(handleChange({
+        name:'jobLocation',
+        value: user.location
+      }))
+    }
+
+    
    },[])
   
 
