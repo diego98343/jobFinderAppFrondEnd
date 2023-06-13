@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import React, { useEffect } from 'react'
-import { handleChange, clearValues, createJob } from '../../features/job/JobSlice';
+import { handleChange, 
+        clearValues, 
+        createJob,
+        editJob} from '../../features/job/JobSlice';
 
 function AddJob() {
 
@@ -33,7 +36,19 @@ function AddJob() {
         toast.error('Please fill out all fields')
         return;
       }
+       //if is edition true then when we submit the form 
+       if(isEditing){
+        dispatch(editJob({jobId:editJobId,
+                          job:{position,company,jobType,jobTypeOptions,jobLocation,status}
+                        })
+                        );
+          //make sure you are using return so the program do not keep reading all the code
+         return;                
+       }
+
+
       dispatch(createJob({position,company,jobLocation,status,jobType}));
+    
    }
 
     // this function handle every input and takes the user input value 

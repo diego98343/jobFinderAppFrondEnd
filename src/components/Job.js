@@ -13,7 +13,7 @@ function Job({_id,position,company,jobLocation,jobType,createdAt,status}) {
   //modify the default date format 
   const date = moment(createdAt).format('MMM Do, YYYY')
 
-  
+
   return (
     <Wrapper>
       <header>

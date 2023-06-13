@@ -84,69 +84,57 @@ export const createJob = createAsyncThunk(
  }
 );
 
-
-
 const jobSlice = createSlice({
-    name:'job',
-    initialState,
-    reducers:{
-
-      //this function takes the changed values from the user input
-      handleChange:(state,{payload:{name,value}})=>{
-        state[name] =value
-      },
-      //this function is used to clear values from the form and reset it to default
-      clearValues: ()=>{
-        return {...initialState,
-                    jobLocation: getUserFromStorage()?.location || ''}
-      },
-
-      setEditJob:(state,{payload})=>{
-        return {...state,isEditing:true,...payload}
-      }
+  name: 'job',
+  initialState,
+  reducers: {
+    handleChange: (state, { payload: { name, value } }) => {
+      state[name] = value;
     },
-    extraReducers:{
-      //createjob from the asyncTHunk
-      [createJob.pending]: (state)=>{
+    clearValues: () => {
+      return {
+        ...initialState,
+        jobLocation:  getUserFromStorage()?.location || '',
+      };
+    },
+    setEditJob: (state, { payload }) => {
+      return { ...state, isEditing: true, ...payload };
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createJob.pending, (state) => {
         state.isLoading = true;
-      },
-      [createJob.fulfilled]: (state)=>{
+      })
+      .addCase(createJob.fulfilled, (state) => {
         state.isLoading = false;
-        toast.success('Job created')
-      },
-      [createJob.rejected]: (state,{payload})=>{
-        state.isLoading = true;
-        toast.error(payload)
-        console.log(payload)
-      },
-
-      //delete reducers
-      [deleteJob.rejected]:(state,{payload})=>{
+        toast.success('Job Created');
+      })
+      .addCase(createJob.rejected, (state, { payload }) => {
         state.isLoading = false;
-        toast.error(payload)
-      },
-      [deleteJob.fulfilled]:(state,{payload})=>{
-        state.isLoading = false
-        toast.success(payload)
-      },
-
-      //edit reducers
-      [editJob.fulfilled]:(state,{payload})=>{
-        state.isLoading =false;
-        toast.success('Job modified');
-      },
-      [editJob.pending]:(state,{payload})=>{
-        state.isLoading = true;
-      },
-      [editJob.rejected]:(state,{payload})=>{
-        state.isLoading = true;
         toast.error(payload);
-      }
-
-    
-      
-    }
+      })
+      .addCase(deleteJob.fulfilled, (state, { payload }) => {
+        toast.success(payload);
+      })
+      .addCase(deleteJob.rejected, (state, { payload }) => {
+        toast.error(payload);
+      })
+      .addCase(editJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editJob.fulfilled, (state) => {
+        state.isLoading = false;
+        toast.success('Job Modified...');
+      })
+      .addCase(editJob.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      });
+  },
 });
+
+
 
 
 
