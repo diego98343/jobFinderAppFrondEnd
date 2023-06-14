@@ -1,4 +1,4 @@
-import { FormRow, FormRowSelect } from '../../components';
+import { FormRow, FormRowSelect, SearchContainer } from '../../components';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -75,6 +75,7 @@ function AddJob() {
 
   return (
     <Wrapper>
+       <SearchContainer/>
       <form className='form'>
          <h3>{isEditing? 'edit job': 'add job'}</h3>
          <div className='form-center'>
