@@ -3,6 +3,8 @@ import Wrapper from '../assets/wrappers/SearchContainer';
 import {useDispatch,useSelector} from 'react-redux'
 import FormRow from './FormRow';
 import FormRowSelect from './FormRowSelect';
+import { clearFilters,handleChange } from '../features/alljobs/AlljobsSlice';
+
 
 
 
@@ -13,13 +15,20 @@ function SearchContainer() {
 
 
   const handleSearch = (e) =>{
-    
-  }
 
+
+    dispatch(handleChange({name: e.target.name, value: e.target.value}))
+
+    const name = e.target
+    const value =e.target.value
+
+    console.log(value)
+ 
+  }
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-
+     dispatch(clearFilters());
   }
 
 
@@ -35,31 +44,29 @@ function SearchContainer() {
                       handleChange={handleSearch}
                     
                     />
-                  {/* search position */} 
+                      {/* search by status */}
                     <FormRowSelect
-                        labelText='status'
-                        name='searchStatus'
-                        value={searchStatus}
-                        handleChange={handleSearch}
-                        list={['all', ...statusOptions]}
-                    />  
-                     {/* search by type*/} 
+                       labelText='status'
+                       name='searchStatus'
+                       value={searchStatus}
+                       handleChange={handleSearch}
+                       list={['all', ...statusOptions]}
+                     />
+                            {/* search by type*/}
+                    <FormRowSelect
+                       labelText='type'
+                       name='searchType'
+                       value={searchType}
+                       handleChange={handleSearch}
+                       list={['all', ...jobTypeOptions]}
+                    />
+                           {/* sort */}
                      <FormRowSelect
-                        labelText='type'
-                        name='searchType'
-                        //value is de default value 
-                        value={searchType}
-                        handleChange={handleSearch}
-                        list={['all', ...jobTypeOptions]}
-                      /> 
-                        {/* sort */} 
-                     <FormRowSelect
-                        labelText='sort'
                         name='sort'
                         value={sort}
                         handleChange={handleSearch}
                         list={sortOptions}
-                      /> 
+                      />
                       <button className='btn btn-block btn-danger' 
                               disabled={isLoading}
                               onClick={handleSubmit}>clear filters</button> 

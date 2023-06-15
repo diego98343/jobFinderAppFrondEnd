@@ -41,6 +41,8 @@ export const getAllJobs = createAsyncThunk('allJobs/getJobs',async(_,thunkAPI)=>
     }
 })
 
+
+
 const allJobsSlice = createSlice({
     name: 'allJobs',
     initialState,
@@ -50,6 +52,14 @@ const allJobsSlice = createSlice({
          },
          hideLoading:(state)=>{
             state.isLoading = false
+         },
+         //we use this to handle the changes 
+         handleChange:(state,{payload:{name,value}})=>{
+            //state.page = 1 later
+            state[name]=value;
+         },
+         clearFilters:(state)=>{
+            return {...state,...initialFilterState}
          }
     },
     extraReducers:{
@@ -68,6 +78,6 @@ const allJobsSlice = createSlice({
     
 })
 
-export const { showLoading,hideLoading}= allJobsSlice.actions
+export const { showLoading,hideLoading,handleChange,clearFilters}= allJobsSlice.actions
 
 export default allJobsSlice.reducer;
