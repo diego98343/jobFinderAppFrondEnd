@@ -75,7 +75,7 @@ function AddJob() {
 
   return (
     <Wrapper>
-       <SearchContainer/>
+     
       <form className='form'>
          <h3>{isEditing? 'edit job': 'add job'}</h3>
          <div className='form-center'>
