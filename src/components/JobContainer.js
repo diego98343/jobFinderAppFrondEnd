@@ -7,14 +7,23 @@ import PageBtnContainer from './PageBtnContainer';
 
 function JobContainer() {
 
-const {jobs, isLoading,page,numOfPages, totalJobs} =useSelector((store)=> store.allJobs)
+const {jobs, 
+       isLoading,
+       page,
+       numOfPages, 
+       totalJobs,
+       search,
+       searchStatus,
+       searchType,
+       
+       } =useSelector((store)=> store.allJobs)
 const dispatch = useDispatch();
 
 // in the use effect function we pass the functionality and then what we expect for example
 useEffect(()=> {
     //dispatch 
     dispatch(getAllJobs());
-},[])
+},[ page, search, searchStatus, searchType])
 
 
 if(isLoading){
