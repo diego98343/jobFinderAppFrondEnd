@@ -15,11 +15,12 @@ function SearchContainer() {
 
 
   const handleSearch = (e) =>{
-
+    
+    if(isLoading) return
 
     dispatch(handleChange({name: e.target.name, value: e.target.value}))
 
-    const name = e.target
+    
     const value =e.target.value
 
     console.log(value)
